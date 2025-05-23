@@ -142,4 +142,4 @@ This package is open-sourced software licensed under the [MIT license](LICENSE).
 
 ---
 
-**Made with ❤️ by [VeiligLanceren.nl](https://veiliglanceren.nl)**
+**Made with ❤️ by [VeiligLanceren.nl](https://veiliglanceren.nl), credits for the idea to [Oussama Mater](https://www.linkedin.com/in/oussamamater) on [LinkedIn](https://www.linkedin.com/feed/update/urn:li:share:7327066187912101889/)**
