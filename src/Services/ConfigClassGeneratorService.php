@@ -27,6 +27,14 @@ class ConfigClassGeneratorService implements IConfigClassGeneratorService
         $path = config('oop-config.path', app_path('Config'));
         $fullPath = $path . '/' . $className . '.php';
 
+        if (!File::exists($path)) {
+            if (!File::makeDirectory($path, 0755, true)) {
+                throw new RuntimeException('Output directory is not writable');
+            }
+        } elseif (!File::isWritable($path)) {
+            throw new RuntimeException('Output directory is not writable');
+        }
+
         if (File::exists($fullPath) && !$force) {
             throw new RuntimeException("Config already exists: {$fullPath}");
         }
@@ -35,6 +43,10 @@ class ConfigClassGeneratorService implements IConfigClassGeneratorService
 
         if (!is_array($configArray)) {
             throw new RuntimeException("Config key '{$key}' is not defined or not an array.");
+        }
+
+        if (!File::exists($this->classStubPath)) {
+            throw new RuntimeException('Stub file does not exist');
         }
 
         $methods = $this->methodGenerator->generate($configArray);

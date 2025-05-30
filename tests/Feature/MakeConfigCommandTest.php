@@ -32,3 +32,33 @@ it('displays error message on failure', function () {
         ->expectsOutput('Config already exists')
         ->assertExitCode(1);
 });
+
+it('shows an error if the config key does not exist', function () {
+    $mockService = Mockery::mock(IConfigGeneratorService::class);
+    $mockService->shouldReceive('generate')
+        ->once()
+        ->with('nonexistent', false)
+        ->andThrow(new RuntimeException("Config key 'nonexistent' is not defined or not an array."));
+
+    $this->app->instance(IConfigGeneratorService::class, $mockService);
+
+    $this
+        ->artisan('make:config nonexistent')
+        ->expectsOutput("Config key 'nonexistent' is not defined or not an array.")
+        ->assertExitCode(1);
+});
+
+it('shows an error if the config file does not return an array', function () {
+    $mockService = Mockery::mock(IConfigGeneratorService::class);
+    $mockService->shouldReceive('generate')
+        ->once()
+        ->with('notarray', false)
+        ->andThrow(new RuntimeException("Config key 'notarray' is not defined or not an array."));
+
+    $this->app->instance(IConfigGeneratorService::class, $mockService);
+
+    $this
+        ->artisan('make:config notarray')
+        ->expectsOutput("Config key 'notarray' is not defined or not an array.")
+        ->assertExitCode(1);
+});

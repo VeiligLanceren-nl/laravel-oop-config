@@ -2,24 +2,9 @@
 
 namespace {{ namespace }};
 
-class {{ className }}
+use VeiligLanceren\LaravelOopConfig\AbstractConfig;
+
+class {{ className }} extends AbstractConfig
 {
-    protected array $config;
-
-    public function __construct(array $config = [])
-    {
-        $this->config = $config;
-    }
-
-    public static function fromConfig(): static
-    {
-        return new static(config('{{ configKey }}'));
-    }
-
-    public function get(string $key, mixed $default = null): mixed
-    {
-        return $this->config[$key] ?? $default;
-    }
-
     {{ methods }}
 }
